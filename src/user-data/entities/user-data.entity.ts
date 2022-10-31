@@ -16,9 +16,9 @@ export class UserData {
   @ApiProperty()
   profileCoverUrl: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   facebookUID: string | null;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   twitterUID: string | null;
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import * as firebase from 'firebase-admin';
 import { CreateUserDataDto } from './dto/create-user-data.dto';
 import { UserData } from './entities/user-data.entity';
-import { ProfileBannerUrl } from './entities/profile-banner-url';
+import { UpdateUserCoverDto } from './dto/update-user-cover.dto';
 
 @Injectable()
 export class UserDataService {
@@ -37,7 +37,7 @@ export class UserDataService {
   async update(
     uid: string,
     updateUserDataDto: UpdateUserDataDto,
-  ): Promise<void | firebase.firestore.WriteResult> {
+  ): Promise<firebase.firestore.WriteResult> {
     const userRef = firebase.firestore().collection('users').doc(`${uid}`);
     return userRef
       .set(
@@ -57,13 +57,13 @@ export class UserDataService {
 
   async updateBanner(
     uid: string,
-    profileBannerUrl: ProfileBannerUrl,
-  ): Promise<void | firebase.firestore.WriteResult> {
+    updateUserCoverDto: UpdateUserCoverDto,
+  ): Promise<firebase.firestore.WriteResult> {
     const userRef = firebase.firestore().collection('users').doc(`${uid}`);
     return userRef
       .set(
         {
-          profileCoverUrl: profileBannerUrl.profileCoverUrl,
+          profileCoverUrl: updateUserCoverDto.profileCoverUrl,
         },
         { merge: true },
       )

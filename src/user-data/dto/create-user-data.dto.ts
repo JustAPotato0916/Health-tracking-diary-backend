@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDataDto {
   @ApiProperty()
@@ -16,9 +16,9 @@ export class CreateUserDataDto {
   @ApiProperty()
   profileCoverUrl: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   facebookUID: string | null;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   twitterUID: string | null;
 }

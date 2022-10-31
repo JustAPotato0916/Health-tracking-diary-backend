@@ -21,7 +21,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserData } from './entities/user-data.entity';
 import { CreateUserDataDto } from './dto/create-user-data.dto';
 import * as firebase from 'firebase-admin';
-import { ProfileBannerUrl } from './entities/profile-banner-url';
+import { UpdateUserCoverDto } from './dto/update-user-cover.dto';
 
 @ApiTags('User data')
 @Controller('user-data')
@@ -29,7 +29,7 @@ export class UserDataController {
   constructor(private userDataService: UserDataService) {}
 
   @ApiCreatedResponse({ type: UserData })
-  @ApiBadRequestResponse({ description: 'User cannot register. Try again!' })
+  @ApiBadRequestResponse()
   @Post()
   create(
     @Body() createUserDto: CreateUserDataDto,
@@ -39,6 +39,7 @@ export class UserDataController {
 
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserData })
+  @ApiBadRequestResponse()
   @Get()
   @UseGuards(AuthGuard('firebase-auth'))
   findOne(@Req() request: Request): Promise<UserData> {
@@ -47,26 +48,28 @@ export class UserDataController {
 
   @ApiBearerAuth()
   @ApiOkResponse({ type: firebase.firestore.WriteResult })
+  @ApiBadRequestResponse()
   @Patch()
   @UseGuards(AuthGuard('firebase-auth'))
   update(
     @Req() request: Request,
     @Body() updateUserDataDto: UpdateUserDataDto,
-  ): Promise<void | firebase.firestore.WriteResult> {
+  ): Promise<firebase.firestore.WriteResult> {
     return this.userDataService.update(request['user'].uid, updateUserDataDto);
   }
 
   @ApiBearerAuth()
   @ApiOkResponse({ type: firebase.firestore.WriteResult })
+  @ApiBadRequestResponse()
   @Patch('/banner')
   @UseGuards(AuthGuard('firebase-auth'))
   updateBanner(
     @Req() request: Request,
-    @Body() profileBannerUrl: ProfileBannerUrl,
-  ): Promise<void | firebase.firestore.WriteResult> {
+    @Body() updateUserCoverDto: UpdateUserCoverDto,
+  ): Promise<firebase.firestore.WriteResult> {
     return this.userDataService.updateBanner(
       request['user'].uid,
-      profileBannerUrl,
+      updateUserCoverDto,
     );
   }
 }
