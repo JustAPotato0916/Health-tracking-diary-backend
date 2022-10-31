@@ -1,24 +1,22 @@
-import { ApiProperty } from '@nestjs/swagger';
-
+import { IsEmail, IsNotEmpty } from 'class-validator';
 export class CreateUserDataDto {
-  @ApiProperty()
+  @IsNotEmpty()
   uid: string;
 
-  @ApiProperty()
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  @ApiProperty()
+  @IsNotEmpty()
   name: string;
 
-  @ApiProperty()
+  @IsNotEmpty()
   profilePhotoUrl: string;
 
-  @ApiProperty()
+  @IsNotEmpty()
   profileCoverUrl: string;
 
-  @ApiProperty()
   facebookUID: string | null;
 
-  @ApiProperty()
   twitterUID: string | null;
 }
