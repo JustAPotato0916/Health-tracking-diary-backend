@@ -7,7 +7,6 @@ export class CreateDiaryDto {
   @IsNotEmpty()
   title: string;
 
-  @IsNotEmpty()
   content: string;
 
   @IsNotEmpty()
